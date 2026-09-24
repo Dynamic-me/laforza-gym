@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "La Forza Gym"
+description = "A cinematic fitness club website for La Forza with scroll-driven storytelling, membership acquisition, and pages for the gym story, membership options, and app launch updates."
+version = "1.0.0"
+id = "artifacts/la-forza"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25385
+
+[services.development]
+run = "pnpm --filter @workspace/la-forza run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/la-forza", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/la-forza/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25385"
+BASE_PATH = "/"
